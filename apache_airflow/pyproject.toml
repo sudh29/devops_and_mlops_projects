@@ -1,0 +1,12 @@
+[project]
+name = "apacheairflow"
+version = "0.1.0"
+description = "Apache Airflow data pipelines and workflow orchestration"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "apache-airflow[postgres]>=2.9.0,<2.11.0",
+    "pydantic>=2.5.0",
+    "requests>=2.31.0",
+    "pytest>=7.4.0",
+]

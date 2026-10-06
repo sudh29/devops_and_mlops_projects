@@ -1,0 +1,5 @@
+apache-airflow[postgres]==2.10.2
+pydantic>=2.5.0
+requests>=2.31.0
+pytest>=7.4.0
+pytest-mock>=3.12.0

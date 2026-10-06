@@ -1,0 +1,43 @@
+{
+  "drift_detected": true,
+  "alpha_threshold": 0.05,
+  "metrics_per_feature": {
+    "air_temperature_k": {
+      "ks_statistic": 0.974,
+      "p_value": 0.0,
+      "drift_detected": true,
+      "reference_mean": 300.042,
+      "current_mean": 308.624
+    },
+    "process_temperature_k": {
+      "ks_statistic": 0.0515,
+      "p_value": 0.233315,
+      "drift_detected": false,
+      "reference_mean": 310.076,
+      "current_mean": 310.191
+    },
+    "rotational_speed_rpm": {
+      "ks_statistic": 0.0455,
+      "p_value": 0.373849,
+      "drift_detected": false,
+      "reference_mean": 1500.281,
+      "current_mean": 1495.525
+    },
+    "torque_nm": {
+      "ks_statistic": 0.0375,
+      "p_value": 0.640174,
+      "drift_detected": false,
+      "reference_mean": 40.164,
+      "current_mean": 39.968
+    },
+    "tool_wear_min": {
+      "ks_statistic": 0.0905,
+      "p_value": 0.002628,
+      "drift_detected": true,
+      "reference_mean": 120.808,
+      "current_mean": 109.372
+    }
+  },
+  "drifted_features_count": 2,
+  "total_features": 5
+}

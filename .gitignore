@@ -228,8 +228,10 @@ terraform.rc
 backend.tf
 backend.hcl
 
-# Provider configuration that may contain sensitive data
-provider*.tf
+# Local IP outputs and temporary execution logs
+instance_ip.txt
+*.ip.txt
+
 # Docker and Podman
 .docker/
 docker-compose.override.yml
@@ -272,3 +274,10 @@ id_ed25519*
 known_hosts
 credentials.yml
 *_credentials.*
+
+# MLOps Model Artifacts and Tracking
+*.joblib
+*.pkl
+mlflow.db
+mlruns/
+.dvc/cache
