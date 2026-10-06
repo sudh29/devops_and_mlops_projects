@@ -50,4 +50,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # 6) copy code and default command
 COPY . .
-CMD ["python", "browser-test.py"]
+CMD ["python", "browser_test.py"]

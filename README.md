@@ -64,18 +64,18 @@ graph TD
 * **Observability**: Live Prometheus scrape endpoint at `/metrics`.
 * **Drift Detection**: Two-sample Kolmogorov-Smirnov (KS) statistical drift detector with JSON audit reports.
 
-### 2. [Terraform Infrastructure as Code](./Terraform/README.md)
+### 2. [Terraform Infrastructure as Code](./terraform/README.md)
 * **14 Progressive Projects**: Progression from basic HCL syntax and JSON configurations to dynamic blocks, maps, loops, and provider integrations.
-* **Modular Reusability**: Reusable EC2 webserver module with keypair abstractions ([`project13`](./Terraform/project13)).
-* **State Management**: Production remote state backend pattern using AWS S3 and DynamoDB state locking ([`project14`](./Terraform/project14)).
+* **Modular Reusability**: Reusable EC2 webserver module with keypair abstractions ([`project13`](./terraform/project13)).
+* **State Management**: Production remote state backend pattern using AWS S3 and DynamoDB state locking ([`project14`](./terraform/project14)).
 
-### 3. [Docker & Podman Containers](./Docker_and_Podman/README.md)
-* **`01-hello`**: Minimalist Python containerization.
-* **`02-flask`**: Multi-stage, non-root microservice with unprivileged `appuser` and container healthchecks.
-* **`03-selenium` & `04-selenium-python`**: Headless browser automation with explicit `WebDriverWait` and assertions.
-* **`05-selenium-grid`**: Scalable multi-browser Selenium Grid 4 cluster running Chrome, Firefox, and Edge via Docker Compose.
+### 3. [Docker & Podman Containers](./docker_and_podman/README.md)
+* **`01_hello`**: Minimalist Python containerization.
+* **`02_flask`**: Multi-stage, non-root microservice with unprivileged `appuser` and container healthchecks.
+* **`03_selenium` & `04_selenium_python`**: Headless browser automation with explicit `WebDriverWait` and assertions.
+* **`05_selenium_grid`**: Scalable multi-browser Selenium Grid 4 cluster running Chrome, Firefox, and Edge via Docker Compose.
 
-### 4. [Apache Airflow Data Orchestration](./ApacheAirflow/README.md)
+### 4. [Apache Airflow Data Orchestration](./apache_airflow/README.md)
 * **Object-Oriented DAG Design**: Extensible `ETLBaseOperator` and `ETLDag` encapsulation.
 * **Unit Testing Suite**: Isolated testing of task execution and DAG graph dependencies.
 * **One-Click Local Stack**: Full PostgreSQL + Webserver + Scheduler setup via Docker Compose.

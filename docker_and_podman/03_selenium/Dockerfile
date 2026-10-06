@@ -21,4 +21,4 @@ RUN chown -R seluser:seluser /app
 USER seluser
 
 # Set the default command
-CMD ["python3", "browser-test.py"]
+CMD ["python3", "browser_test.py"]

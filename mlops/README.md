@@ -39,7 +39,7 @@ graph LR
 
 ```
 mlops/
-├── docker-compose.mlops.yml    # Full MLOps stack (MinIO, MLflow, FastAPI, Prometheus)
+├── docker_compose_mlops.yml    # Full MLOps stack (MinIO, MLflow, FastAPI, Prometheus)
 ├── prometheus.yml             # Prometheus scrape configuration
 ├── pyproject.toml             # Project dependency specification
 ├── requirements.txt           # Pinned dependencies
@@ -140,7 +140,7 @@ Generates `monitoring/drift_report.json` with p-values and KS-statistics for eve
 Start the complete stack (MinIO + MLflow + Inference API + Prometheus):
 
 ```bash
-docker compose -f docker-compose.mlops.yml up -d
+docker compose -f docker_compose_mlops.yml up -d
 ```
 
 ---

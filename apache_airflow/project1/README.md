@@ -13,7 +13,7 @@ This guide will help you set up and run the sample Airflow DAG for ETL workflows
 ### 1. Clone the Repository & Navigate to Project
 
 ```bash
-cd ~/Dev/Devops_and_MLops_Projects/ApacheAirflow
+cd devops_and_mlops_projects/apache_airflow
 ```
 
 ### 2. Create & Activate Virtual Environment
@@ -80,7 +80,7 @@ Access the Airflow UI at [http://localhost:8080](http://localhost:8080).
 **Project Structure:**
 
 ```
-ApacheAirflow/
+apache_airflow/
 ├── project1/
 │   ├── src/
 │   │   └── first_airflow.py

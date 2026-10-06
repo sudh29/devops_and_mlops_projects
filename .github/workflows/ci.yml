@@ -33,7 +33,7 @@ jobs:
 
       - name: Validate Terraform Formatting
         run: |
-          terraform fmt -check -recursive Terraform/
+          terraform fmt -check -recursive terraform/
 
   test-mlops:
     name: Test MLOps Pipeline & Serving
@@ -84,7 +84,7 @@ jobs:
 
       - name: Run Airflow DAG Unit Tests
         run: |
-          cd ApacheAirflow/project1
+          cd apache_airflow/project1
           python -m unittest test/test.py
 
   docker-build:
@@ -99,7 +99,7 @@ jobs:
 
       - name: Build Flask Image
         run: |
-          docker build -t test-flask Docker_and_Podman/02-flask/
+          docker build -t test-flask docker_and_podman/02_flask/
 
       - name: Build MLOps Serving Image
         run: |

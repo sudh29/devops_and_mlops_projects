@@ -15,11 +15,11 @@ help:
 	@echo "  make down-selenium  - Stop Selenium Grid"
 
 fmt:
-	terraform fmt -recursive Terraform/
+	terraform fmt -recursive terraform/
 	@which ruff >/dev/null 2>&1 && ruff format . || echo "Ruff not found in PATH, skipping python format"
 
 lint:
-	terraform fmt -check -recursive Terraform/
+	terraform fmt -check -recursive terraform/
 	@which ruff >/dev/null 2>&1 && ruff check . || echo "Ruff not found in PATH, skipping ruff check"
 
 data:
@@ -32,27 +32,27 @@ test-mlops:
 	@which pytest >/dev/null 2>&1 && pytest -v mlops/tests/ || echo "pytest not installed in active environment"
 
 test-airflow:
-	cd ApacheAirflow/project1 && python3 -m unittest test/test.py
+	cd apache_airflow/project1 && python3 -m unittest test/test.py
 
 test: test-airflow test-mlops
 
 up-mlops:
-	docker compose -f mlops/docker-compose.mlops.yml up -d
+	docker compose -f mlops/docker_compose_mlops.yml up -d
 
 down-mlops:
-	docker compose -f mlops/docker-compose.mlops.yml down
+	docker compose -f mlops/docker_compose_mlops.yml down
 
 up-airflow:
-	docker compose -f ApacheAirflow/docker-compose.yaml up -d
+	docker compose -f apache_airflow/docker_compose.yaml up -d
 
 down-airflow:
-	docker compose -f ApacheAirflow/docker-compose.yaml down
+	docker compose -f apache_airflow/docker_compose.yaml down
 
 up-selenium:
-	docker compose -f Docker_and_Podman/05-selenium-grid/docker-compose-v3.yml up -d
+	docker compose -f docker_and_podman/05_selenium_grid/docker_compose_v3.yml up -d
 
 down-selenium:
-	docker compose -f Docker_and_Podman/05-selenium-grid/docker-compose-v3.yml down
+	docker compose -f docker_and_podman/05_selenium_grid/docker_compose_v3.yml down
 
 clean:
 	find . -type d -name "__pycache__" -exec rm -rf {} +

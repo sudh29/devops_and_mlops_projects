@@ -77,13 +77,12 @@ airflow scheduler
 
 3. Access the Airflow UI at: http://localhost:8080
 
-### Using Docker Compose (Production)
+### Using Docker Compose (Local Stack)
 
-1. Create a docker-compose.yml file with Airflow services
-2. Start services:
+Start services using the included stack:
 
 ```bash
-docker-compose up -d
+docker compose -f docker_compose.yaml up -d
 ```
 
 ## Common Airflow Commands

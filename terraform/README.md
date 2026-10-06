@@ -2,24 +2,12 @@
 
 This repository contains various Terraform projects for infrastructure provisioning and management.
 
-## Setup and Installation
+## Setup and Prerequisites
 
-### Python Virtual Environment Setup
+### Prerequisites
 
-```bash
-# Create and activate virtual environment using uv (recommended)
-uv venv --python 3.11
-# On Unix/Linux/WSL:
-source .venv/bin/activate
-# On Windows PowerShell:
-.\.venv\Scripts\Activate.ps1
-
-# Initialize dependencies
-uv pip install -r requirements.txt
-
-uv pip freeze > requirements.txt
-
-```
+- [Terraform CLI](https://developer.hashicorp.com/terraform/install) (v1.5+ recommended) installed.
+- AWS CLI configured with valid credentials (`aws configure` or environment variables `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`).
 
 ### AWS Authentication Setup
 

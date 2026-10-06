@@ -4,11 +4,11 @@ This repository contains several examples demonstrating how to use Podman with d
 
 ## Project Structure
 
-- `01-hello/`: Simple Python container example
-- `02-flask/`: Flask web application container
-- `03-selenium/`: Selenium with Chrome container
-- `04-selenium-python/`: Selenium with Python integration
-- `05-selenium-grid/`: Selenium Grid setup with Docker Compose
+- `01_hello/`: Simple Python container example
+- `02_flask/`: Flask web application container
+- `03_selenium/`: Selenium with Chrome container
+- `04_selenium_python/`: Selenium with Python integration
+- `05_selenium_grid/`: Selenium Grid setup with Docker Compose
 
 ## 1. Hello - Basic Python Container
 
@@ -28,10 +28,10 @@ Example of running a Flask web application in a container.
 
 ```bash
 # Build the container image
-podman build --tag python-podman .
+podman build --tag flask-app .
 
 # Run the container with port mapping
-podman run --publish 5000:5000 python-podman
+podman run --publish 5000:5000 flask-app
 
 # Access the application at:
 # http://127.0.0.1:5000
@@ -83,20 +83,20 @@ Example of running a Selenium Grid setup using Docker Compose.
 
 ```bash
 # Start the grid using existing images
-podman-compose -f docker-compose-v3.yml up
+podman-compose -f docker_compose_v3.yml up
 
 # Start the grid with forced rebuild
-podman-compose -f docker-compose-v3.yml up --build
+podman-compose -f docker_compose_v3.yml up --build
 
 # Stop and remove the grid
-podman-compose -f docker-compose-v3.yml down
+podman-compose -f docker_compose_v3.yml down
 
 # Access containers
 podman exec -it selenium-hub /bin/sh      # Access Selenium Hub
 podman exec -it selenium-node-chrome /bin/sh  # Access Chrome Node
 
 # Copy test file to Chrome node
-podman cp browser-test.py selenium-node-chrome:/home/
+podman cp browser_test.py selenium-node-chrome:/home/
 
 # View Chrome node logs
 podman-compose logs -f chrome
