@@ -60,7 +60,7 @@ resource "aws_instance" "web" {
 
   provisioner "remote-exec" {
     inline = [
-      "ipconfig > /tmp/ipconfig.output",
+      "ip addr show > /tmp/ip_addr.output",
       "echo 'This is a remote execution' > /tmp/remote_execution.text"
     ]
   }

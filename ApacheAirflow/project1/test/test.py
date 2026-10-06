@@ -1,6 +1,10 @@
 import unittest
 from datetime import datetime
-from airflow.utils.context import Context
+try:
+    from airflow.utils.context import Context
+except ImportError:
+    class Context(dict):
+        pass
 import sys
 import os
 
@@ -51,6 +55,14 @@ class TestETLOperators(unittest.TestCase):
         
         # Should not raise any exceptions
         load.process(self.context)
+
+    def test_dag_structure(self):
+        from src.first_airflow import dag
+        self.assertEqual(dag.dag_id, "etl_workflow_oop")
+        self.assertEqual(len(dag.tasks), 3)
+        self.assertEqual(dag.task_dict["extract"].downstream_task_ids, {"transform"})
+        self.assertEqual(dag.task_dict["transform"].downstream_task_ids, {"load"})
+        self.assertEqual(dag.task_dict["load"].upstream_task_ids, {"transform"})
 
 if __name__ == '__main__':
     unittest.main()

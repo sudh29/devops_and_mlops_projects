@@ -13,9 +13,38 @@ from datetime import datetime, timedelta
 import logging
 from typing import Dict, Any, Optional
 
-from airflow import DAG
-from airflow.models.baseoperator import BaseOperator
-from airflow.exceptions import AirflowException
+try:
+    from airflow import DAG
+    from airflow.models.baseoperator import BaseOperator
+    from airflow.exceptions import AirflowException
+except ImportError:
+    # Lightweight fallback for environments where full apache-airflow is not installed
+    class AirflowException(Exception):
+        pass
+
+    class BaseOperator:
+        def __init__(self, task_id: str = "", dag: Any = None, **kwargs) -> None:
+            self.task_id = task_id
+            self.dag = dag
+            self.upstream_task_ids = set()
+            self.downstream_task_ids = set()
+            if dag and hasattr(dag, "_add_task"):
+                dag._add_task(self)
+
+        def __rshift__(self, other):
+            self.downstream_task_ids.add(other.task_id)
+            other.upstream_task_ids.add(self.task_id)
+            return other
+
+    class DAG:
+        def __init__(self, dag_id: str, **kwargs) -> None:
+            self.dag_id = dag_id
+            self.tasks = []
+            self.task_dict = {}
+
+        def _add_task(self, task):
+            self.tasks.append(task)
+            self.task_dict[task.task_id] = task
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -82,10 +111,12 @@ class TransformOperator(ETLBaseOperator):
 
     def process(self, context: Dict[str, Any]) -> Dict[str, Any]:
         """Implement the data transformation logic."""
-        input_data = context['task_instance'].xcom_pull(task_ids=context['task'].upstream_task_ids.pop())
+        upstream_ids = context['task'].upstream_task_ids
+        upstream_id = next(iter(upstream_ids)) if upstream_ids else None
+        input_data = context['task_instance'].xcom_pull(task_ids=upstream_id) if upstream_id else {}
         logger.info(f"Transforming data using {self.transformation_type}")
         # Add your transformation logic here
-        return {**input_data, "transformed": True}
+        return {**(input_data or {}), "transformed": True}
 
 class LoadOperator(ETLBaseOperator):
     """Operator for loading transformed data into target systems."""
@@ -96,7 +127,9 @@ class LoadOperator(ETLBaseOperator):
 
     def process(self, context: Dict[str, Any]) -> None:
         """Implement the data loading logic."""
-        input_data = context['task_instance'].xcom_pull(task_ids=context['task'].upstream_task_ids.pop())
+        upstream_ids = context['task'].upstream_task_ids
+        upstream_id = next(iter(upstream_ids)) if upstream_ids else None
+        input_data = context['task_instance'].xcom_pull(task_ids=upstream_id) if upstream_id else {}
         logger.info(f"Loading data into {self.target_system}")
         # Add your loading logic here
 

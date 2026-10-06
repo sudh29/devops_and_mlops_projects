@@ -4,11 +4,11 @@ This repository contains several examples demonstrating how to use Podman with d
 
 ## Project Structure
 
-- `1 Hello/`: Simple Python container example
-- `2 Flask/`: Flask web application container
-- `3 Selenium/`: Selenium with Chrome container
-- `4 Selenium Python/`: Selenium with Python integration
-- `5 Selenium Grid Docker/`: Selenium Grid setup with Docker Compose
+- `01-hello/`: Simple Python container example
+- `02-flask/`: Flask web application container
+- `03-selenium/`: Selenium with Chrome container
+- `04-selenium-python/`: Selenium with Python integration
+- `05-selenium-grid/`: Selenium Grid setup with Docker Compose
 
 ## 1. Hello - Basic Python Container
 
@@ -45,12 +45,12 @@ Example of running Selenium with Chrome in a container.
 # Build the Selenium Chrome image
 podman build -t selenium-chrome .
 
-# Run the container with VNC and Selenium ports
+# Run the container with VNC (5900), noVNC (7900), and Selenium (4444) ports
 podman run --rm -it \
-    -p 4444:4444 \   # Selenium port
-    -p 5900:5900 \   # VNC server port
-    -p 7900:7900 \   # noVNC HTTP port
-    --shm-size 2g \  # Shared memory size
+    -p 4444:4444 \
+    -p 5900:5900 \
+    -p 7900:7900 \
+    --shm-size 2g \
     selenium-chrome
 
 # Alternative: Run with bash shell access

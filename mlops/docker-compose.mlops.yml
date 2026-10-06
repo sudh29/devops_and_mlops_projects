@@ -1,0 +1,68 @@
+services:
+  # MinIO: S3-compatible object store for MLflow artifacts and datasets
+  minio:
+    image: minio/minio:RELEASE.2024-03-30T09-41-56Z
+    container_name: mlops-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadminpassword
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # MLflow Tracking Server & Model Registry
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.11.3
+    container_name: mlops-mlflow
+    ports:
+      - "5000:5000"
+    environment:
+      MLFLOW_S3_ENDPOINT_URL: http://minio:9000
+      AWS_ACCESS_KEY_ID: minioadmin
+      AWS_SECRET_ACCESS_KEY: minioadminpassword
+    command: >
+      mlflow server
+      --backend-store-uri sqlite:///mlflow.db
+      --default-artifact-root s3://mlflow/
+      --host 0.0.0.0
+      --port 5000
+    depends_on:
+      minio:
+        condition: service_started
+    restart: unless-stopped
+
+  # FastAPI Model Serving Microservice
+  ml-serving:
+    build:
+      context: .
+      dockerfile: serving/Dockerfile
+    container_name: mlops-serving
+    ports:
+      - "8000:8000"
+    environment:
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+      AWS_ACCESS_KEY_ID: minioadmin
+      AWS_SECRET_ACCESS_KEY: minioadminpassword
+      MLFLOW_S3_ENDPOINT_URL: http://minio:9000
+    depends_on:
+      - mlflow
+    restart: unless-stopped
+
+  # Prometheus: Time-series metrics collection
+  prometheus:
+    image: prom/prometheus:v2.51.0
+    container_name: mlops-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - ml-serving
+    restart: unless-stopped

@@ -1,4 +1,4 @@
-output second_block {
+output "second_block" {
   value       = "This is second block"
   sensitive   = true
   description = "description second block"
